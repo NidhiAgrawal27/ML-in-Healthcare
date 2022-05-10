@@ -1,0 +1,6 @@
+Sentence:
+Groups A and S had 34 and 37 patients , respectively .
+Tokenized w. no lemmatization:
+['groups', 's', '34', '37', 'patients', 'respectively']
+Tokenized w. lemmatization:
+['group', 's', '34', '37', 'patient', 'respectively']
