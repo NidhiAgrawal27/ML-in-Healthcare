@@ -1,0 +1,80 @@
+\documentclass[sigconf]{acmart}\settopmatter{printfolios=true,printccs=false,printacmref=false}
+%\geometry{a4paper}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+%\usepackage[hidelinks]{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{siunitx}
+\usepackage{booktabs}
+%\usepackage{float}
+\usepackage{stfloats}
+
+\sisetup{separate-uncertainty,detect-all}
+
+\setcopyright{none}
+\acmDOI{}
+\acmISBN{}
+\acmConference{Machine Learning for Healthcare}{2022}{ETH Zurich, Switzerland}
+\copyrightyear{\today}
+
+
+\begin{document}
+
+\title{Project 1 Time Series}
+
+\settopmatter{authorsperrow=3}
+\author{Anton Schäfer}
+\affiliation{
+	\institution{ETH Zurich}
+	\country{Switzerland}
+}
+\email{scanton@ethz.ch}
+
+\author{Lasse F. Wolff Anthony}
+\affiliation{
+	\institution{ETH Zurich}
+	\country{Switzerland}
+}
+\email{laanthony@ethz.ch}
+
+\author{Nidhi Agrawal}
+\affiliation{
+	\institution{ETH Zurich}
+	\country{Switzerland}
+}
+\email{agrawaln@ethz.ch}
+
+
+\input{00_abstract}
+
+\maketitle
+
+\input{01_introduction}
+
+\input{02_models_and_methods}
+
+\input{03_experiments}
+
+\input{04_conclusion}
+
+
+
+\bibliographystyle{ACM-Reference-Format}
+
+\bibliography{bibliography}
+
+\clearpage
+\input{05_appendix}
+
+\end{document}

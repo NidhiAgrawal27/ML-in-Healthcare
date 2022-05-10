@@ -1,0 +1,43 @@
+\section{Models and Methods}
+\label{sec:models_and_methods}
+\subsection{Datasets}
+We evaluate our models on the preprocessed\footnote{Cropped, downsampled, and zero-padded.} versions of the following two medical time series datasets:
+
+\begin{itemize}[leftmargin=0cm]
+    \setlength\itemsep{0.6em}
+    \item[]
+    \textbf{MIT-BIH Arrhythmia Dataset (MIT-BIH) \citep{moody2001impact, goldberger2000physiobank}:}
+    The original dataset contains 48 half-hour excerpts of two-channel ambulatory ECG recordings, obtained from 47 subjects. The recordings were digitized at 360 samples per second per channel. We have been provided with \SI{109446} samples ($80\%$ train and $20\%$ test samples), 188 features including labels. Labels have 5 classes denoting a normal beat, supraventricular premature beat, premature ventricular contraction, fusion of ventricular and normal beat, and unclassifiable beat. The dataset is highly imbalanced with ${\sim}83\%$ corresponding to normal beats.
+    
+    \item[]
+    \textbf{PTB Diagnostic ECG Database (PTB DB) \citep{bousseljot1995nutzung, goldberger2000physiobank}:} The original dataset contains 549 records from 290 subjects. Each record includes 15 simultaneously measured signals from the conventional 12 leads along with the 3 Frank lead ECGs. Each signal was digitized at \SI{1000} samples per second. We have been provided with \SI{14552} samples ($80\%$ train and $20\%$ test samples), 188 features including labels. Labels have 2 classes denoting normal and myocardial infarction.
+\end{itemize}
+
+
+\subsection{Models}
+We investigate several deep learning architectures as well as a tree-based model and compare them to the provided CNN-based baselines\footnote{\url{https://github.com/CVxTz/ECG_Heartbeat_Classification/tree/master/code}}.
+%All deep learning models leverage architectural patterns like the attention mechanism, convolutions, or recurrent units. These architectures are commonly applied to sequential time series data as they aggregate hidden states over the time dimension.
+While we find that for the tree-based model, different architectures work better for the different datasets, we apply the same deep learning architectures on both datasets and vary only the final prediction layer. For the PTB DB dataset with binary targets, we generate a single logit and use the sigmoid activation, while we use softmax for the 5-class MITBIH dataset.
+
+\begin{itemize}[leftmargin=0cm]
+    \setlength\itemsep{0.6em}
+    \item[]
+    \textbf{CNN models:} We compare our models to the aforementioned CNN baseline with eight convolutional layers (\textsc{Baseline}) and to the deep residual CNN with 5 residual blocks containing two convolutional layers each proposed by \citet{kachuee2018ecg} (\textsc{Deep ResCNN}). We propose a simple CNN model (\textsc{VanillaCNN}) that we found to yield the best validation accuracy during an architecture search. The model consists of four convolutional layers with comparably big kernel sizes (7, 9, 11, 11) followed by three dense layers. We further propose a deeper residual CNN (\textsc{Deep++ ResCNN}) comprised of 10 residual blocks each comprising two convolutional layers. Finally, we try to improve predictions on minority classes by training a \textsc{VanillaCNN} with a weighted loss function.
+    
+    \item[]
+    \textbf{Attention model:} Given the recent success of attention-based methods in various fields, we also introduce an architecture that combines the attention mechanism with convolution (\textsc{AttCNN}). We include convolution layers to enable the model to utilize positional or neighborhood information. This can be crucial for understanding the data without requiring additional positional embeddings. The model uses four multi-head dot-product self-attention layers that are each preceded by a residual block as in \textsc{Deep++ ResCNN}. Further skip connections are used and layer normalization is added before every attention layer.
+    
+    \item[]
+    \textbf{RNN models:} We evaluate two RNN-based models. A simple RNN (\textsc{VanillaRNN}) and GRU model (\textsc{GRU}). For both, we find that four 512-wide layers followed by average pooling over all hidden states and four linear layers perform best on a hold-out validation set. For \textsc{VanillaRNN} we use a simple RNN layer with Tanh activation. We further experiment with versions that instead use ReLU activation and clipped gradients to a maximum value of $0.5$ (\textsc{VanillaRNN+ReLU+Clip}). This helps combat vanishing and exploding gradients we observed when using Tanh activations or unclipped gradients. \textsc{GRU} uses Tanh activationsand clipped gradients resulting in a much more stable learning curve.
+    
+    \item[]
+    \textbf{Transfer learning:} As proposed by \citet{kachuee2018ecg}, we apply transfer learning to two of our models, \textsc{VanillaRNN} and \textsc{GRU}, by first training them on the bigger MIT-BIH dataset then freezing the convolutional, or respectively, GRU layers, and lastly only training the final dense layers on the PTB DB dataset.
+    
+    \item[]
+    \textbf{Tree-based models:} Deep-learning based models often require large amounts of compute and benefit from the massive parallel compute offered by GPUs. We explore the trade-off between compute required and model performance by further evaluating an averaging classifier using multiple randomized decision trees fit on sub-samples of the data \citep{geurts2006extremely} (\textsc{Extra Trees}).
+    
+    \item[]
+    \textbf{Ensemble models:} We employ two ensemble learning methods: a model averaging ensemble (\textsc{Model avg. ensemble}) and a stacking ensemble (\textsc{Stacking ensemble}). \textsc{Model avg. ensemble} uses an unweighted average of the predicted output probabilities across all trained models for its predictions. \textsc{Stacking ensemble} instead trains a logistic regression classifier on the predictions of all other trained models.
+    Internally, both of these models examine all log files generated by training other models (except ensemble models) to create their predictions.
+\end{itemize}
+

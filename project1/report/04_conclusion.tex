@@ -1,0 +1,82 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+In this work, we investigated the performance of several deep-learning based models across the tasks of ECG interpretation and heart arrhythmia classification. Having benchmarked all of our models, we showed that a simple CNN model is able to achieve good performance on both tasks and added model complexity may not yield better results. Further, introducing class weights on the loss can lead to better results for minority classes trading off some overall performance. Finally, we showed that model performance can be improved using transfer learning or ensemble methods across diverse models but these may inherit problems from the sub-learners such as decreased performance across rare events or classes. 
+
+
+\begin{table*}[]
+\centering
+\addtolength{\leftskip} {-2cm}
+\addtolength{\rightskip}{-2cm}
+\sisetup{
+table-alignment-mode = format
+}
+\begin{tabular}{@{}
+  l
+  S[table-format=3.0(3)]
+  S[table-format=1.4(1)]
+  S[table-format=1.4(1)]
+  S[table-format=1.4(1)]
+  S[table-format=1.4(1)]
+  @{}}
+\toprule
+Model & {Training time (s)} & {Accuracy} & {F1} & {AUROC} & {AUPRC} \\
+\midrule
+\textsc{Stacking ensemble} & 583 \pm 10 & \bfseries 0.9969 \pm 0.0000 & \bfseries 0.9961 \pm 0.0000 & \bfseries 0.9989 \pm 0.0000 & \bfseries 0.9995 \pm 0.0000 \\
+\textsc{GRU} (transfer) & 321 \pm 30 & 0.9954 \pm 0.0011 & 0.9943 \pm 0.0014 & 0.9988 \pm 0.0002 & 0.9993 \pm 0.0002 \\
+\textsc{Deep ResCNN} & 52 \pm 11 & 0.9951 \pm 0.0011 & 0.9938 \pm 0.0013 & 0.9971 \pm 0.0002 & 0.9973 \pm 0.0003 \\
+\textsc{Model avg. ensemble} & & 0.9945 \pm 0.0000 & 0.9931 \pm 0.0000 & 0.9981 \pm 0.0000 & 0.9988 \pm 0.0000 \\
+\textsc{VanillaCNN} (transfer) & 35 \pm 9 & 0.9945 \pm 0.0011 & 0.9931 \pm 0.0014 & 0.9975 \pm 0.0006 & 0.9982 \pm 0.0005 \\
+\textsc{VanillaCNN} w. weighted loss & 41 \pm 9 & 0.9937 \pm 0.0014 & 0.9921 \pm 0.0017 & 0.9966 \pm 0.0004 & 0.9973 \pm 0.0004 \\
+\textsc{VanillaCNN} & 39 \pm 7 & 0.9926 \pm 0.0016 & 0.9907 \pm 0.0020 & 0.9967 \pm 0.0007 & 0.9975 \pm 0.0006 \\
+\textsc{Baseline} & 49 \pm 9 & 0.9893 \pm 0.0042 & 0.9866 \pm 0.0053 & 0.9981 \pm 0.0009 & 0.9991 \pm 0.0005 \\
+\textsc{Deep++ ResCNN} & 72 \pm 7 & 0.9842 \pm 0.0048 & 0.9802 \pm 0.0060 & 0.9966 \pm 0.0015 & 0.9984 \pm 0.0009 \\
+\textsc{Extra Trees} & \bfseries 12 \pm 0 & 0.9799 \pm 0.0005 & 0.9747 \pm 0.0006 & 0.9963 \pm 0.0001 & 0.9982 \pm 0.0001 \\
+\textsc{AttCNN} & 95 \pm 30 & 0.9504 \pm 0.0604 & 0.9310 \pm 0.0893 & 0.9734 \pm 0.0429 & 0.9881 \pm 0.0188 \\
+\textsc{GRU} & 328 \pm 111 & 0.8850 \pm 0.1055 & 0.8440 \pm 0.1468 & 0.9135 \pm 0.0971 & 0.9636 \pm 0.0409 \\
+\textsc{VanillaRNN+ReLU+Clip} & 356 \pm 279 & 0.8201 \pm 0.1200 & 0.6350 \pm 0.2642 & 0.8032 \pm 0.1582 & 0.9096 \pm 0.0742 \\
+\textsc{VanillaRNN} & 134 \pm 18 & 0.7221 \pm 0.0000 & 0.4193 \pm 0.0000 & 0.5166 \pm 0.0476 & 0.7559 \pm 0.0374 \\
+\bottomrule
+\end{tabular}
+\caption{Model performances on the PTB DB test dataset.\protect\footnotemark{\label{footnote:ensemble}}}
+\label{tab:results_ptbdb}
+\end{table*}
+
+\footnotetext{Note that the ensemble models require all other models to be trained beforehand as they are trained on their prediction outputs. The training times are therefore not directly comparative to other models.}
+
+
+\begin{table*}[]
+\centering
+\sisetup{
+table-alignment-mode = format
+}
+\begin{tabular}{@{}
+  l
+  S[table-format=4.0(1)]
+  S[table-format=1.4(1)]
+  S[table-format=1.4(1)]
+  @{}}
+\toprule
+Model & {Training time (s)} & {Accuracy} & {F1} \\
+\midrule
+\textsc{Model avg. ensemble} & & \bfseries 0.9875 \pm 0.0000 & 0.9247 \pm 0.0000 \\
+\textsc{VanillaCNN} & 181 \pm 31 & 0.9874 \pm 0.0008 & 0.9248 \pm 0.0058 \\
+\textsc{GRU} & 1775 \pm 239 & 0.9872 \pm 0.0007 & \bfseries 0.9251 \pm 0.0049 \\
+\textsc{Stacking ensemble} & 3818 \pm 62 & 0.9870 \pm 0.0000 & 0.9211 \pm 0.0000 \\
+\textsc{Deep ResCNN} & 321 \pm 45 & 0.9864 \pm 0.0006 & 0.9199 \pm 0.0026 \\
+\textsc{Baseline} & 290 \pm 33 & 0.9850 \pm 0.0009 & 0.9143 \pm 0.0040 \\
+\textsc{Deep++ ResCNN} & 442 \pm 65 & 0.9849 \pm 0.0011 & 0.9147 \pm 0.0066 \\
+\textsc{AttCNN} & 577 \pm 138 & 0.9836 \pm 0.0012 & 0.9076 \pm 0.0084 \\
+\textsc{Extra Trees} & \bfseries 67 \pm 7 & 0.9764 \pm 0.0002 & 0.8792 \pm 0.0022 \\
+\textsc{VanillaCNN} w. weighted loss & 260 \pm 39 & 0.9681 \pm 0.0027 & 0.8554 \pm 0.0074 \\
+\textsc{VanillaRNN+ReLU+Clip} & 2994 \pm 1911 & 0.9543 \pm 0.0224 & 0.7443 \pm 0.1483 \\
+\textsc{VanillaRNN} & 886 \pm 84 & 0.8306 \pm 0.0060 & 0.1972 \pm 0.0322 \\
+\bottomrule
+\end{tabular}
+\caption{Model performances on the MITBIH test dataset.\protect\footnotemark}
+\label{tab:results_mitbih}
+\end{table*}
+
+
+\footnotetext{See footnote \ref{footnote:ensemble}.}
+
