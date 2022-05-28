@@ -1,0 +1,38 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+In this work, we have investigated methods such as TF-IDF features, one-hot encodings, word embeddings based on word2vec and BERT for obtaining sentence embeddings for use in the task of sequential sentence classification. We combined these embeddings with several different classification architectures and explored their performance on the PubMed 200k RCT dataset. We showed that logistic regression using TF-IDF features presents a strong baseline performance. Unsupervised word embedding methods showed mediocre performance while a one-hot method learning embeddings directly produced very good results. Still, computationally more expensive BERT-based models were able to significantly outperform all other evaluated architectures.
+
+
+
+\begin{table}[]
+\centering
+\sisetup{
+table-alignment-mode = format
+}
+\begin{tabular}{@{}
+  l
+  r %S[table-format=4.0(1)]
+  r %S[table-format=1.4(1)]
+  @{}}
+\toprule
+Model & {Training time} & {F1} \\
+\midrule
+\textsc{BERT Finetuned + Idx} & 12 h & \bfseries 0.897 \\
+\textsc{BERT Finetuned} & 12 h & 0.881 \\
+\textsc{BERT Frozen} & 12 h & 0.842 \\
+\textsc{OneHot} & 2638 s & 0.835 \\
+\textsc{OneHot lemm.} & 1602 s & 0.833 \\
+\textsc{Baseline} & 825 s & 0.812\\
+\textsc{Baseline w. lemmatization} & 783 s & 0.798 \\
+\textsc{Word2Vec MLP} & 248 s & 0.784 \\
+\textsc{GloVe MLP} & 283 s & 0.780 \\
+\textsc{Word2Vec MLP lemm.} & 197 s & 0.771 \\
+\textsc{Word2Vec LR} & 151 s & 0.720 \\
+\textsc{Word2Vec LR lemm.} & \bfseries 145 s & 0.706 \\
+\bottomrule
+\end{tabular}
+\caption{Model performance on the test set. The F1-score denotes the average weighted (by support) F1-score. Training time does not include training of embeddings.}
+\label{tab:results}
+\end{table}
+
