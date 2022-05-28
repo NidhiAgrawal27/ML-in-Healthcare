@@ -1,5 +1,4 @@
-# machine-learning-for-healthcare-2022
-Machine Learning for Healthcare 2022 course of ETH University.
+# Machine Learning for Healthcare 2022 course of ETH University
 
 'ECG_Classification' repository contains the code and report for ECG classification as part of project 1 (http://www.vvz.ethz.ch/lerneinheitPre.do?semkez=2022S&lerneinheitId=158957&lang=en).
 
