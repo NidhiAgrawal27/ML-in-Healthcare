@@ -1,0 +1,24 @@
+\newpage
+\appendix
+
+\section{Misclassified SHAP images}
+\label{sec:appendix_misclassified}
+\autoref{fig:appendix_shap} shows misclassifications for our CNN baseline and VGG16 transfer learning model.
+
+\begin{figure*}[b]
+\centering
+\begin{subfigure}{0.5\linewidth}
+  \centering
+    \includegraphics[width=1\linewidth]{figures/baseline_cnn_incorrect_shap.jpeg}
+    \caption{}
+    \label{fig:baseline_cnn_incorrect_shap}
+\end{subfigure}%
+\begin{subfigure}{0.5\linewidth}
+  \centering
+    \includegraphics[width=1\linewidth]{figures/transfer_learning_incorrect_shap.jpeg}
+    \caption{}
+    \label{fig:transfer_learning_incorrect_shap}
+\end{subfigure}
+\caption{SHAP images. (a) \textsc{Baseline CNN} (Actual: Tumor, Pred: No Tumor). (b) \textsc{VGG16 TL} (Actual: No Tumor, Pred: Tumor).}
+\label{fig:appendix_shap}
+\end{figure*}

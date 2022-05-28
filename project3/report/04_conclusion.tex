@@ -1,0 +1,31 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+In this work, we have evaluated several interpretable models, such as decision trees and logistic regression, and post-hoc explanation methods, like convolutional neural networks and VGG16 with LIME and SHAP in the task of brain tumor detection based on magnetic resonance imaging scans. We further introduced a random forest baseline together with a permutation-based feature importance method as a more complex baseline with limited interpretability. We showed that the simpler and more interpretable models do not offer the same performance as more complex models combined with post-hoc explanation methods but the simpler models are more easily understood and interpreted. If performance is crucial and post-hoc explanations are sufficient, convolutional neural networks are a good choice with high performance and explainability with methods such as SHAP and LIME.
+
+
+\begin{table}[]
+\centering
+\sisetup{
+table-alignment-mode = format
+}
+\begin{tabular}{@{}
+  l
+  r %S[table-format=4.0(1)]
+  r %S[table-format=1.4(1)]
+  r %S[table-format=1.4(1)]
+  @{}}
+\toprule
+Model & {Train time (s)} & {Accuracy} & {F1} \\
+\midrule
+\textsc{Baseline CNN} & 34 \pm 0 & \bfseries 0.9286 \pm 0.0000 & \bfseries 0.9545 \pm 0.0000 \\
+\textsc{VGG16 TL} & 34 \pm 0 & 0.8571 \pm 0.0000 & 0.9000 \pm 0.0000 \\
+\textsc{Logistic Regression} & 3 \pm 0 & 0.7857 \pm 0.0000 & 0.8500 \pm 0.0000 \\
+\textsc{Decision Tree} & \bfseries 0 \pm 0 & 0.7571 \pm 0.0143 & 0.8190 \pm 0.0121 \\
+\textsc{Random Forest} & \bfseries 0 \pm 0 & 0.7571 \pm 0.0267 & 0.8279 \pm 0.0224 \\
+\bottomrule
+\end{tabular}
+\caption{Model performance on their respective test sets.}
+\label{tab:results}
+\end{table}
+
